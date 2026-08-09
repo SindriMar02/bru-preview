@@ -47,7 +47,10 @@ cp "$REPO"/assets/vendor/*.js   assets/vendor/
 # ship a srcset, and an attribute-anchored pattern skips every candidate after
 # the first, so the phone-sized files never stage and 404 on exactly the device
 # the owner opens the link on.
-grep -ohE 'assets/img/[A-Za-z0-9._-]+\.(webp|jpg|jpeg|png|svg)' index.html \
+# Scan app.js too, not just the markup: the opening preloads a photograph the
+# HTML never names, and it only ever shipped as a leftover from an older
+# deploy. The moment the tree was cleared properly it 404'd.
+grep -ohE 'assets/img/[A-Za-z0-9._-]+\.(webp|jpg|jpeg|png|svg)' index.html app.js styles.css \
   | sed -E 's|.*assets/img/||' | sort -u > /tmp/bru-assets.txt
 while read -r f; do [ -n "$f" ] && cp "$REPO/assets/img/$f" "assets/img/$f"; done < /tmp/bru-assets.txt
 cp "$REPO/assets/img/favicon.svg" assets/img/
