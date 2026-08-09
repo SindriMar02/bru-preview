@@ -289,13 +289,18 @@
           letters from below (the mark is the progress bar; no percentage)
        3. that same line runs out to both edges, the field splits along it, and
           the photograph is behind it already in register
-     HORIZON_F is measured, not guessed: the horizon sits at 48.9% of the hero
-     photograph's height. The cover geometry is solved so the drawn line and
-     the photographed one are the same line. */
-  var HORIZON_F = 0.60, HERO_W = 1024, HERO_H = 683;   // measured by eye against
-                                                       // marked candidate lines:
-                                                       // the far land edge, and
-                                                       // the row itself sits on it
+     HORIZON_F is measured, not guessed. The cover geometry is solved so the
+     drawn line and the photographed one are the same line. */
+  var HORIZON_F = 0.545, HERO_W = 2200, HERO_H = 1470;  // vegurinn.webp: 0.545 is
+                                                        // the ground the twelve
+                                                        // cottages stand on. Read
+                                                        // off marked candidate
+                                                        // lines, not off a
+                                                        // brightness step — the
+                                                        // strongest gradient in
+                                                        // the band is the grass
+                                                        // /road edge at 0.590,
+                                                        // which is the wrong line.
   (function opening() {
     var wrap = document.getElementById('opening');
     var top = document.getElementById('openTop');
@@ -336,8 +341,13 @@
     }
     setProgress(0);
 
-    var srcs = ['assets/img/rodin.webp', 'assets/img/nott-aurora.webp'];
-    var done = 0, total = srcs.length + 1, finished = false, shown = 0;
+    /* Wait on the hero's OWN <img>, never on a duplicate `new Image(src)`.
+       The hero ships a srcset, so a hardcoded src here would (a) go stale the
+       next time the photograph changes and (b) download a second, different
+       file the page never paints. */
+    var heroImg = document.querySelector('.bru-hero__media img');
+    var srcs = ['assets/img/nott-aurora.webp'];
+    var done = 0, total = srcs.length + 2, finished = false, shown = 0;
     function bump() {
       done++;
       var p = Math.min(1, done / total);
@@ -372,6 +382,10 @@
         });
     }
     srcs.forEach(function (s) { var im = new Image(); im.onload = im.onerror = bump; im.src = s; });
+    if (!heroImg) bump();
+    else if (heroImg.complete) bump();
+    else { heroImg.addEventListener('load', bump, { once: true });
+           heroImg.addEventListener('error', bump, { once: true }); }
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { place(); bump(); }); else bump();
     setTimeout(finish, 6000);   // a stuck decode must never trap anyone behind it
   })();
