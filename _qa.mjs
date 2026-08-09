@@ -59,18 +59,22 @@ log(idx.links === 6 && idx.cot === 'cottages' && idx.night === 'night' && idx.bo
 
 /* 3b. THE SET PIECE: genuinely pinned, and the film TRACKS (not replays) */
 const film = await page.evaluate(async () => {
-  const st = ScrollTrigger.getAll().find(t => t.pin)
+  const st = ScrollTrigger.getAll().find(t => t.vars && t.vars.scrub && t.trigger === document.querySelector('.bru-film'))
   const cv = document.querySelector('.bru-film__canvas')
   if (!st || !cv) return null
-  const read = async f => { window.scrollTo(0, Math.round(st.start + (st.end - st.start) * f))
-    await new Promise(r => setTimeout(r, 560)); return Number(cv.dataset.frame ?? -1) }
+  // Lenis owns the scroll, so a single scrollTo gets reverted by its rAF loop.
+  // Write it, let it settle, then read.
+  const read = async f => { const y = Math.round(st.start + (st.end - st.start) * f)
+    window.scrollTo(0, y); await new Promise(r => setTimeout(r, 300))
+    window.scrollTo(0, y); await new Promise(r => setTimeout(r, 800))
+    return Number(cv.dataset.frame ?? -1) }
   const a = await read(0.02), mid = await read(0.5), end = await read(0.98), back = await read(0.5)
-  const spacer = !!(document.querySelector('.bru-film').parentElement || {}).classList?.contains('pin-spacer')
+  const c = document.querySelector('.bru-film__canvas'); const spacer = c.height > 200 && c.width > 200
   return { a, mid, end, back, spacer }
 })
 log(!!film && film.spacer && film.end >= 100 && film.mid > film.a && Math.abs(film.back - film.mid) <= 2,
-  'set piece is pinned and the film tracks scroll both ways',
-  film ? `${film.a} -> ${film.mid} -> ${film.end}, back ${film.back} of 120, spacer:${film.spacer}` : 'no pinned trigger')
+  'set piece canvas has real pixels and the film tracks both ways',
+  film ? `${film.a} -> ${film.mid} -> ${film.end}, back ${film.back} of 120, canvasOK:${film.spacer}` : 'no pinned trigger')
 
 
 /* 5. headline words resolve */

@@ -311,17 +311,20 @@ body.bru-static .bru-rv{opacity:1;transform:none}
 .bru-index a.is-here span{opacity:1;transform:none}
 
 /* ── the pick block: say what the strip is before showing it ───────────── */
-  font-family:'Technor',sans-serif;font-weight:500;
-  font-size:clamp(18px,1.7vw,23px);margin:0 0 .4em;
-}
-  font-size:15px;font-weight:500;margin:1.1em 0 0;
-  color:color-mix(in srgb, var(--ink) 90%, transparent);
-}
 
 
 /* ══ THE SET PIECE ════════════════════════════════════════════════════════ */
-.bru-film{position:relative;height:100svh;min-height:420px;overflow:hidden;background:var(--night-deep)}
-.bru-film__inner{position:absolute;inset:0}
+/* NO GSAP PIN. The pin records the element's height and writes it back as an
+   inline max-height; when that measurement comes back 0 the section collapses
+   and the canvas is allocated 0px tall, permanently and with no error. CSS
+   sticky cannot do that: the height lives in the stylesheet and nothing
+   measures or rewrites it. The section is simply tall, and its inner sticks. */
+/* vh, not svh: the section is a SCROLL-LENGTH spacer, and 300svh was being
+   dropped here and collapsing the section onto its sticky child (900px instead
+   of 2700px), which left the scrub with a zero range. vh is universally
+   supported and the mobile-chrome difference is irrelevant for a spacer. */
+.bru-film{position:relative;height:300vh;background:var(--night-deep)}
+.bru-film__inner{position:sticky;top:0;height:100svh;min-height:420px;overflow:hidden}
 .bru-film__still,.bru-film__still img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .bru-film__canvas{position:absolute;inset:0;width:100%;height:100%}
 .bru-film__scrim{position:absolute;inset:0;pointer-events:none;
@@ -369,7 +372,6 @@ body.bru-static .bru-rv{opacity:1;transform:none}
   fill:none;stroke:rgba(237,235,230,.34);stroke-width:1.1;
   letter-spacing:.01em;
 }
-  width:min(760px,72vw);margin-inline:auto;pointer-events:none}
 
 
 /* ── testimonials, auto-rotating ──────────────────────────────────────── */
