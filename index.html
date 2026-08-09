@@ -303,15 +303,33 @@
      its source and date. Nothing written by us. The owner should confirm
      before this goes public: see _internal/NOTES.md.
      This sits BEFORE the form on purpose: the proof earns the ask. A booking
-     form placed ahead of the evidence is asking a stranger to go first. -->
+     form placed ahead of the evidence is asking a stranger to go first, and
+     the two are bound into one field so it does not read as a spare slab.
+
+     Built on the page's OWN device rather than a generic testimonial block:
+     hairlines are the horizon, and the reviews are marks standing on it, the
+     same way the twelve cottages stand on the line in the hero. Three sources
+     instead of one, because a single platform score reads as cherry-picked
+     and the spread is the actual argument. Figures are dated evidence from
+     _internal/OUTREACH.md — re-read them before this goes in front of anyone,
+     review counts move. -->
 <section class="bru-says" id="says">
-  <div class="bru-wrap bru-says__grid">
-    <div class="bru-rv">
-      <p class="bru-eyebrow">What guests say</p>
-      <p class="bru-says__score">9,3</p>
-      <p class="bru-says__of">out of 10, from 1.181 reviews on Booking.com</p>
-    </div>
-    <div class="bru-rv">
+  <div class="bru-wrap">
+    <p class="bru-eyebrow bru-rv">What guests say</p>
+
+    <ul class="bru-scores bru-rv">
+      <li><span class="bru-scores__n">9,3</span>
+          <span class="bru-scores__src">Booking.com</span>
+          <span class="bru-scores__c">out of 10, from 1.181 reviews</span></li>
+      <li><span class="bru-scores__n">9,8</span>
+          <span class="bru-scores__src">Expedia</span>
+          <span class="bru-scores__c">out of 10, from 454 reviews</span></li>
+      <li><span class="bru-scores__n">3.123</span>
+          <span class="bru-scores__src">Guide to Iceland</span>
+          <span class="bru-scores__c">guests have reviewed the stay</span></li>
+    </ul>
+
+    <div class="bru-says__rail bru-rv">
       <div class="bru-says__stage" id="saysStage">
         <figure class="bru-quote is-on">
           <blockquote>Probably the best cottage I have ever been. And best location for northern light spotting.</blockquote>
@@ -330,7 +348,7 @@
           <cite>Tripadvisor, guest review</cite>
         </figure>
       </div>
-      <div class="bru-says__dots" id="saysDots" role="tablist" aria-label="Reviews"></div>
+      <div class="bru-says__marks" id="saysDots" role="tablist" aria-label="Reviews"></div>
     </div>
   </div>
 </section>
