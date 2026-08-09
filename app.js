@@ -420,11 +420,19 @@
        version look soft. */
     var FRAME_W = 1760, FRAME_H = 1176;
     var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    /* A PINNED SECTION CAN REPORT A ZERO RECT. While ScrollTrigger sets a pin
+       up it writes height:0/max-height:0 on the element, and if size() runs in
+       that window the canvas is allocated 0px tall — after which it can never
+       paint anything again, silently, with no error. Always fall back to the
+       viewport, and never allocate a zero dimension. */
     function size() {
       var r = sec.getBoundingClientRect();
-      var need = Math.max(r.width / FRAME_W, r.height / FRAME_H);
+      var w = Math.max(1, Math.round(r.width || window.innerWidth));
+      var h = Math.max(1, Math.round(r.height || window.innerHeight));
+      var need = Math.max(w / FRAME_W, h / FRAME_H);
       var d = Math.min(dpr, Math.max(1, 1 / need));
-      cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d);
+      var nw = Math.max(1, Math.round(w * d)), nh = Math.max(1, Math.round(h * d));
+      if (cv.width !== nw || cv.height !== nh) { cv.width = nw; cv.height = nh; }
       draw(cv.dataset.frame ? Number(cv.dataset.frame) : 0);
     }
     function drawCover(im) {
@@ -461,6 +469,7 @@
 
     loadFrames(function () { size(); });
     window.addEventListener('resize', size, { passive: true });
+    ScrollTrigger.addEventListener('refresh', size);   // the pin changes the rect
     size();
     ScrollTrigger.create({
       trigger: sec, start: 'top top', end: '+=200%',

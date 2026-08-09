@@ -320,7 +320,7 @@ body.bru-static .bru-rv{opacity:1;transform:none}
 
 
 /* ══ THE SET PIECE ════════════════════════════════════════════════════════ */
-.bru-film{position:relative;height:100svh;overflow:hidden;background:var(--night-deep)}
+.bru-film{position:relative;height:100svh;min-height:420px;overflow:hidden;background:var(--night-deep)}
 .bru-film__inner{position:absolute;inset:0}
 .bru-film__still,.bru-film__still img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .bru-film__canvas{position:absolute;inset:0;width:100%;height:100%}
