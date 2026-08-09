@@ -118,13 +118,12 @@
      cottages in a line, but it now does a job: it tells you where you are and
      takes you somewhere. Real links, so it works without JS and on a keyboard. -->
 <nav class="bru-index" id="index" aria-label="Sections">
-  <span class="bru-index__line" aria-hidden="true"></span>
-  <a href="#plain" data-sec="plain"><i aria-hidden="true"></i><span>Where this is</span></a>
-  <a href="#cottages" data-sec="cottages"><i aria-hidden="true"></i><span>Cottages</span></a>
-  <a href="#inside" data-sec="inside"><i aria-hidden="true"></i><span>Inside</span></a>
-  <a href="#night" data-sec="night"><i aria-hidden="true"></i><span>The night</span></a>
-  <a href="#book" data-sec="book"><i aria-hidden="true"></i><span>Book direct</span></a>
-  <a href="#where" data-sec="where"><i aria-hidden="true"></i><span>Find us</span></a>
+  <a href="#plain" data-sec="plain"><span>Where this is</span></a>
+  <a href="#cottages" data-sec="cottages"><span>Cottages</span></a>
+  <a href="#inside" data-sec="inside"><span>Inside</span></a>
+  <a href="#night" data-sec="night"><span>The night</span></a>
+  <a href="#book" data-sec="book"><span>Book direct</span></a>
+  <a href="#where" data-sec="where"><span>Find us</span></a>
 </nav>
 
 <main id="top">
@@ -306,13 +305,10 @@
      form placed ahead of the evidence is asking a stranger to go first, and
      the two are bound into one field so it does not read as a spare slab.
 
-     Built on the page's OWN device rather than a generic testimonial block:
-     hairlines are the horizon, and the reviews are marks standing on it, the
-     same way the twelve cottages stand on the line in the hero. Three sources
-     instead of one, because a single platform score reads as cherry-picked
-     and the spread is the actual argument. Figures are dated evidence from
-     _internal/OUTREACH.md — re-read them before this goes in front of anyone,
-     review counts move. -->
+     Three sources instead of one, because a single platform score reads as
+     cherry-picked and the spread is the actual argument. Figures are dated
+     evidence from _internal/OUTREACH.md — re-read them before this goes in
+     front of anyone, review counts move. -->
 <section class="bru-says" id="says">
   <div class="bru-wrap">
     <p class="bru-eyebrow bru-rv">What guests say</p>
@@ -330,25 +326,25 @@
     </ul>
 
     <div class="bru-says__rail bru-rv">
+      <!-- The source line IS the control: the four attributions sit in a row
+           and the one you are reading is inked. No abstract marks to decode,
+           and seeing all four platforms at once is itself part of the proof.
+           data-cite feeds the tab text, so the attribution is written once. -->
       <div class="bru-says__stage" id="saysStage">
-        <figure class="bru-quote is-on">
+        <figure class="bru-quote is-on" data-cite="Trip.com, November 2024">
           <blockquote>Probably the best cottage I have ever been. And best location for northern light spotting.</blockquote>
-          <cite>Trip.com, November 2024</cite>
         </figure>
-        <figure class="bru-quote">
+        <figure class="bru-quote" data-cite="Tripadvisor, May 2023">
           <blockquote>The self check-in was flawless. The keys were in a box outside the cottage and the code came by email in advance.</blockquote>
-          <cite>Tripadvisor, May 2023</cite>
         </figure>
-        <figure class="bru-quote">
+        <figure class="bru-quote" data-cite="Tripadvisor, July 2024">
           <blockquote>A special shout-out to the owners, who took the time to track me down after I absentmindedly left our passports behind.</blockquote>
-          <cite>Tripadvisor, July 2024</cite>
         </figure>
-        <figure class="bru-quote">
+        <figure class="bru-quote" data-cite="Tripadvisor, guest review">
           <blockquote>Each house seems rather small from the outside, but the inside is super cosy and has everything you might need.</blockquote>
-          <cite>Tripadvisor, guest review</cite>
         </figure>
       </div>
-      <div class="bru-says__marks" id="saysDots" role="tablist" aria-label="Reviews"></div>
+      <div class="bru-says__sources" id="saysDots" role="tablist" aria-label="Reviews"></div>
     </div>
   </div>
 </section>

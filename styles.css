@@ -284,31 +284,23 @@ body.bru-static .bru-rv{opacity:1;transform:none}
   z-index:72;display:none;flex-direction:column;gap:0;
 }
 @media (min-width:1100px){.bru-index{display:flex}}
-.bru-index__line{
-  position:absolute;left:5px;top:6px;bottom:6px;width:1px;
-  background:color-mix(in srgb, currentColor 22%, transparent);
-}
+/* No rule, no ticks. At rest the rail shows ONE thing: the name of the section
+   you are in. Reach for it and the rest of the list fades up under your
+   cursor. A dash you have to decode is not navigation; a word is. */
 .bru-index a{
-  position:relative;display:flex;align-items:center;gap:12px;
-  min-height:44px;text-decoration:none;color:inherit;
-  padding-right:4px;
-}
-.bru-index a i{
-  width:11px;height:2px;flex:0 0 11px;
-  background:color-mix(in srgb, currentColor 34%, transparent);
-  transition:width .4s var(--e),background .4s var(--e),box-shadow .4s var(--e);
+  position:relative;display:flex;align-items:center;
+  min-height:44px;text-decoration:none;color:inherit;padding-right:8px;
 }
 .bru-index a span{
-  font-size:12px;letter-spacing:.06em;white-space:nowrap;
-  opacity:0;transform:translateX(-6px);
-  transition:opacity .35s var(--e),transform .35s var(--e);
+  font-size:12px;letter-spacing:.07em;white-space:nowrap;
+  opacity:0;transform:translateX(-5px);
+  transition:opacity .4s var(--e),transform .4s var(--e);
 }
-.bru-index a:hover span,.bru-index a:focus-visible span{opacity:.7;transform:none}
-.bru-index a.is-here i{
-  width:26px;background:var(--window);
-  box-shadow:0 0 10px color-mix(in srgb, var(--window) 55%, transparent);
-}
-.bru-index a.is-here span{opacity:1;transform:none}
+.bru-index a.is-here span{opacity:.85;transform:none}
+.bru-index:hover a span,.bru-index:focus-within a span{opacity:.4;transform:none}
+.bru-index:hover a.is-here span,.bru-index:focus-within a.is-here span{opacity:1}
+.bru-index a:hover span,.bru-index a:focus-visible span{opacity:.85}
+.bru-index a:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 
 /* ── the pick block: say what the strip is before showing it ───────────── */
 
@@ -431,37 +423,23 @@ body.bru-static .bru-rv{opacity:1;transform:none}
 }
 @media (min-width:760px){.bru-quote blockquote{max-width:30ch}}
 @media (min-width:1100px){.bru-quote blockquote{max-width:38ch}}
-.bru-quote cite{
-  font-style:normal;font-size:13px;letter-spacing:.06em;
-  color:color-mix(in srgb, var(--ink) 58%, transparent);
-}
-
-/* The control is the page's own motif, not a row of dots: marks STANDING on a
-   line, the way the twelve cottages stand on the horizon in the hero. The
-   44px box is the tap target; the visible mark is the 2px tick inside it. */
-.bru-says__marks{
-  position:relative;display:flex;justify-content:space-between;
+/* The control is the attribution itself. Abstract ticks on a rule made the
+   reader decode a shape to find out what it did; a source and a date say it
+   outright, and the four platforms side by side are part of the argument. */
+.bru-says__sources{
+  display:flex;flex-wrap:wrap;column-gap:clamp(20px,2.6vw,44px);row-gap:4px;
   margin-top:clamp(18px,2.6vh,34px);
 }
-/* The line runs edge to edge and the marks stand within it — the hero's
-   horizon, where the row of cottages sits inside a line that carries on past
-   them. Bunched in the left corner under a full-width rule it read as a
-   stray control; spread across the measure it reads as the row.
-   No negative margins to reach the very edge: at 390 they would out-dent past
-   the wrap's padding and trip the horizontal-overflow gate. */
-.bru-says__marks::before{
-  content:'';position:absolute;left:0;right:0;bottom:13px;height:1px;
-  background:color-mix(in srgb, var(--ink) 16%, transparent);
+.bru-says__sources button{
+  min-height:44px;padding:13px 0;border:0;background:none;cursor:pointer;
+  font-family:'Synonym',sans-serif;font-size:13px;font-weight:500;
+  letter-spacing:.05em;text-align:left;
+  /* 40% looked right and measured 2.68:1 — a fail on text, and these are
+     controls, not decoration. Dim enough to rank below the active source,
+     never dim enough to be unreadable. */
+  color:color-mix(in srgb, var(--ink) 68%, transparent);
+  transition:color .4s var(--e);
 }
-.bru-says__marks button{
-  position:relative;width:48px;height:44px;padding:0 0 13px;border:0;
-  background:none;cursor:pointer;display:grid;place-items:end center;
-}
-.bru-says__marks button::before{
-  content:'';display:block;width:2px;height:9px;
-  background:color-mix(in srgb, var(--ink) 30%, transparent);
-  transition:height .45s var(--e),background .45s var(--e);
-}
-.bru-says__marks button[aria-selected="true"]::before{height:24px;background:var(--ink)}
-.bru-says__marks button:hover::before{background:color-mix(in srgb, var(--ink) 60%, transparent)}
-.bru-says__marks button:focus-visible{outline:2px solid var(--ink);outline-offset:-6px}
+.bru-says__sources button:hover{color:color-mix(in srgb, var(--ink) 88%, transparent)}
+.bru-says__sources button[aria-selected="true"]{color:var(--ink)}
+.bru-says__sources button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}

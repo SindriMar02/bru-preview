@@ -520,7 +520,11 @@
       b.type = 'button';
       b.setAttribute('role', 'tab');
       b.setAttribute('aria-selected', String(n === 0));
-      b.setAttribute('aria-label', 'Review ' + (n + 1) + ' of ' + quotes.length);
+      // the attribution IS the label: written once, in the markup, on the quote
+      b.textContent = q.dataset.cite || ('Review ' + (n + 1));
+      b.id = 'saysTab' + n;
+      q.setAttribute('role', 'tabpanel');
+      q.setAttribute('aria-labelledby', b.id);
       b.addEventListener('click', function () { show(n); restart(); });
       dots.appendChild(b);
     });
