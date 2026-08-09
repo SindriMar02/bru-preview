@@ -443,10 +443,22 @@
           if (shots[i + k]) { im = shots[i + k]; break; }
         }
       }
-      if (!im) return;
+      if (!im) {                      // still nothing decoded: hold the poster
+        if (poster.complete && poster.naturalWidth) drawCover(poster);
+        return;
+      }
       drawCover(im);
       cv.dataset.frame = String(i);
     }
+    /* THE CANVAS MUST NEVER BE EMPTY. 121 frames is megabytes, and a reload
+       deep in the page samples this long before they arrive — which is exactly
+       what the outreach preflight flags. Paint the poster into the canvas the
+       moment it decodes, so there is always a real picture there, and let the
+       frames replace it as they land. */
+    var poster = new Image();
+    poster.onload = function () { if (!shots[0]) { size(); drawCover(poster); } };
+    poster.src = 'assets/img/nott-poster.jpg';
+
     loadFrames(function () { size(); });
     window.addEventListener('resize', size, { passive: true });
     size();
