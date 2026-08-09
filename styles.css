@@ -381,37 +381,87 @@ body.bru-static .bru-rv{opacity:1;transform:none}
    the first field — the exact place the reader should not pause. Collapse the
    seam at the join only, so either section still stands alone if moved. */
 .bru-says:has(+ .bru-book){padding-bottom:clamp(30px,4.5vh,64px)}
-.bru-says + .bru-book{padding-top:clamp(30px,4.5vh,64px)}
-.bru-says__grid{display:grid;gap:clamp(20px,3vw,56px);grid-template-columns:1fr}
-@media (min-width:900px){.bru-says__grid{grid-template-columns:.7fr 1.3fr;align-items:start}}
-.bru-says__score{
-  font-family:'Technor',sans-serif;font-weight:500;
-  font-size:clamp(46px,6vw,84px);line-height:1;margin:0;
+/* No extra rule at this join. The marks line already closes the proof, and a
+   border on .bru-wrap paints across its BORDER box — 1390px wide against the
+   1318px of the hairlines inside it, so the three rules did not line up. The
+   form follows the marks directly instead. */
+.bru-says + .bru-book{padding-top:clamp(30px,4.4vh,60px)}
+/* Three sources across, on a hairline. One platform score alone reads as
+   cherry-picked; the spread is the argument. */
+.bru-scores{
+  list-style:none;margin:clamp(20px,2.6vh,34px) 0 0;
+  padding:clamp(22px,3vh,40px) 0 clamp(30px,4.2vh,56px);
+  border-top:1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  display:grid;grid-template-columns:1fr;gap:clamp(20px,2.6vw,38px);
 }
-.bru-says__of{font-size:14px;margin:.5em 0 0;color:color-mix(in srgb, var(--ink) 60%, transparent)}
-.bru-says__stage{position:relative;min-height:13em}
-@media (min-width:900px){.bru-says__stage{min-height:9.5em}}
+@media (min-width:720px){.bru-scores{grid-template-columns:repeat(3,1fr)}}
+.bru-scores__n{
+  display:block;font-family:'Technor',sans-serif;font-weight:500;
+  font-size:clamp(42px,5.4vw,78px);line-height:.95;letter-spacing:-.015em;
+}
+.bru-scores__src{
+  display:block;margin-top:.7em;font-weight:500;font-size:13px;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.bru-scores__c{
+  display:block;margin-top:.35em;font-size:13.5px;line-height:1.45;
+  color:color-mix(in srgb, var(--ink) 58%, transparent);
+}
+
+/* The quote sits under its own hairline, so the section reads as two bands
+   on the same horizon rather than a two-column slab with a hole in it. */
+.bru-says__rail{border-top:1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  padding-top:clamp(28px,4vh,52px)}
+/* Every quote occupies the SAME grid cell, so the stage is automatically as
+   tall as the longest one at whatever width it is being read at. The old
+   absolute + min-height version was a guess in em against the stage's own
+   font-size, not the quote's: too short and the longest review ran out over
+   the marks, too tall and it left the hole this section was redesigned to
+   remove. Grid stacking has no number to get wrong. */
+.bru-says__stage{display:grid}
 .bru-quote{
-  position:absolute;inset:0;opacity:0;pointer-events:none;
-  transition:opacity .6s var(--e);
+  grid-area:1/1;margin:0;opacity:0;pointer-events:none;
+  transform:translateY(10px);
+  transition:opacity .55s var(--e),transform .55s var(--e);
 }
-.bru-quote.is-on{opacity:1;pointer-events:auto}
+.bru-quote.is-on{opacity:1;pointer-events:auto;transform:none}
 .bru-quote blockquote{
-  margin:0 0 1.1em;font-family:'Technor',sans-serif;font-weight:500;
-  font-size:clamp(19px,2.1vw,30px);line-height:1.3;letter-spacing:-.01em;max-width:26ch;
+  margin:0 0 .85em;font-family:'Technor',sans-serif;font-weight:500;
+  font-size:clamp(21px,2.6vw,38px);line-height:1.24;letter-spacing:-.015em;max-width:22ch;
 }
+@media (min-width:760px){.bru-quote blockquote{max-width:30ch}}
+@media (min-width:1100px){.bru-quote blockquote{max-width:38ch}}
 .bru-quote cite{
   font-style:normal;font-size:13px;letter-spacing:.06em;
   color:color-mix(in srgb, var(--ink) 58%, transparent);
 }
-.bru-says__dots{display:flex;gap:10px;margin-top:1.6em}
-.bru-says__dots button{
-  width:44px;height:44px;padding:0;border:0;background:none;cursor:pointer;
-  display:grid;place-items:center;
+
+/* The control is the page's own motif, not a row of dots: marks STANDING on a
+   line, the way the twelve cottages stand on the horizon in the hero. The
+   44px box is the tap target; the visible mark is the 2px tick inside it. */
+.bru-says__marks{
+  position:relative;display:flex;justify-content:space-between;
+  margin-top:clamp(18px,2.6vh,34px);
 }
-.bru-says__dots button::before{
-  content:'';display:block;width:20px;height:2px;
-  background:color-mix(in srgb, var(--ink) 26%, transparent);
-  transition:background .3s var(--e),width .3s var(--e);
+/* The line runs edge to edge and the marks stand within it — the hero's
+   horizon, where the row of cottages sits inside a line that carries on past
+   them. Bunched in the left corner under a full-width rule it read as a
+   stray control; spread across the measure it reads as the row.
+   No negative margins to reach the very edge: at 390 they would out-dent past
+   the wrap's padding and trip the horizontal-overflow gate. */
+.bru-says__marks::before{
+  content:'';position:absolute;left:0;right:0;bottom:13px;height:1px;
+  background:color-mix(in srgb, var(--ink) 16%, transparent);
 }
-.bru-says__dots button[aria-selected="true"]::before{background:var(--ink);width:34px}
+.bru-says__marks button{
+  position:relative;width:48px;height:44px;padding:0 0 13px;border:0;
+  background:none;cursor:pointer;display:grid;place-items:end center;
+}
+.bru-says__marks button::before{
+  content:'';display:block;width:2px;height:9px;
+  background:color-mix(in srgb, var(--ink) 30%, transparent);
+  transition:height .45s var(--e),background .45s var(--e);
+}
+.bru-says__marks button[aria-selected="true"]::before{height:24px;background:var(--ink)}
+.bru-says__marks button:hover::before{background:color-mix(in srgb, var(--ink) 60%, transparent)}
+.bru-says__marks button:focus-visible{outline:2px solid var(--ink);outline-offset:-6px}
