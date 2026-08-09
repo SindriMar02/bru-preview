@@ -26,10 +26,14 @@ else
   git checkout -q --orphan gh-pages
   git rm -rq --cached . >/dev/null 2>&1 || true
 fi
-# Clear the staged tree INSIDE THE TEMP WORKTREE ONLY. Everything here is
-# untracked after the orphan checkout, so this removes it precisely and can
-# never wander outside the worktree. The earlier -type d sweep silently left
-# root-level files behind, and gate 1 caught them.
+# Clear the staged tree INSIDE THE TEMP WORKTREE ONLY. The earlier -type d
+# sweep silently left root-level files behind, and gate 1 caught them.
+# `git rm --cached` first: building on top of gh-pages means every file from
+# the last deploy is TRACKED, and `git clean` only deletes untracked ones. So a
+# retired asset stayed live forever — the old hero was still being served after
+# it had been replaced. Untrack, then clean, and the tree is genuinely fresh
+# while the branch keeps its history (still no force-push).
+git rm -rq --cached . >/dev/null 2>&1 || true
 git clean -xfdq
 
 mkdir -p assets/img assets/fonts assets/vendor
