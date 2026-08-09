@@ -425,8 +425,9 @@
        that window the canvas is allocated 0px tall — after which it can never
        paint anything again, silently, with no error. Always fall back to the
        viewport, and never allocate a zero dimension. */
+    var inner = sec.querySelector('.bru-film__inner');
     function size() {
-      var r = sec.getBoundingClientRect();
+      var r = inner.getBoundingClientRect();
       var w = Math.max(1, Math.round(r.width || window.innerWidth));
       var h = Math.max(1, Math.round(r.height || window.innerHeight));
       var need = Math.max(w / FRAME_W, h / FRAME_H);
@@ -472,9 +473,8 @@
     ScrollTrigger.addEventListener('refresh', size);   // the pin changes the rect
     size();
     ScrollTrigger.create({
-      trigger: sec, start: 'top top', end: '+=200%',
-      pin: true, scrub: 0.55, invalidateOnRefresh: true,
-      refreshPriority: -1,           // settle BEFORE the triggers that start after it
+      trigger: sec, start: 'top top', end: 'bottom bottom',
+      scrub: 0.55, invalidateOnRefresh: true,
       onUpdate: function (self) {
         var i = Math.min(FRAME_COUNT - 1, Math.round(self.progress * (FRAME_COUNT - 1)));
         draw(i);
