@@ -26,9 +26,11 @@ else
   git checkout -q --orphan gh-pages
   git rm -rq --cached . >/dev/null 2>&1 || true
 fi
-# clear the staged tree (inside the temp worktree only, never the repo)
-git ls-files -z | xargs -0 -r rm -f
-find . -mindepth 1 -maxdepth 1 -not -name '.git' -type d -exec rm -rf {} +
+# Clear the staged tree INSIDE THE TEMP WORKTREE ONLY. Everything here is
+# untracked after the orphan checkout, so this removes it precisely and can
+# never wander outside the worktree. The earlier -type d sweep silently left
+# root-level files behind, and gate 1 caught them.
+git clean -xfdq
 
 mkdir -p assets/img assets/fonts assets/vendor
 cp "$REPO/index.html" "$REPO/styles.css" "$REPO/app.js" "$REPO/robots.txt" .
@@ -46,8 +48,9 @@ cp -R "$REPO/assets/img/frames" "$REPO/assets/img/frames-sm" assets/img/
 touch .nojekyll
 
 # GATE 1 — nothing internal or source may reach the staged tree
-if find . -name '_*' -o -name 'src-*' | grep -q .; then
-  echo "BLOCKED: an internal or source file reached the staged tree"; exit 1; fi
+leak=$(find . -path ./.git -prune -o \( -name '_*' -o -name 'src-*' \) -print)
+if [ -n "$leak" ]; then
+  echo "BLOCKED: internal or source files reached the staged tree:"; echo "$leak"; exit 1; fi
 # GATE 2 — the preview must stay out of search
 grep -q 'noindex' index.html || { echo "BLOCKED: index.html missing noindex"; exit 1; }
 grep -q 'Disallow: /' robots.txt || { echo "BLOCKED: robots.txt does not disallow"; exit 1; }
