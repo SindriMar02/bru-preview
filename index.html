@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brú Guesthouse · twelve cottages on the south Iceland plain</title>
+<meta name="description" content="Twelve self check-in cottages at Brú, 861 Hvolsvöllur, ten kilometres from Seljalandsfoss. Kitchenette, private bathroom, mountain-view terrace. Book direct with us.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#CFD2DB" id="themeColor">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<!-- raster twin: Safari ignores SVG favicons entirely and falls back to the
+     ORIGIN root icon, i.e. another client's mark in this client's tab -->
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+<link rel="preload" href="assets/fonts/Technor-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Synonym-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/img/rodin.webp">
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "LodgingBusiness",
+ "@id": "https://sindrimar02.github.io/bru-preview/#lodging",
+ "name": "Brú Guesthouse",
+ "url": "https://sindrimar02.github.io/bru-preview/",
+ "telephone": "+354-659-4005",
+ "email": "info@bruguesthouse.is",
+ "address": {"@type":"PostalAddress","streetAddress":"Brú","addressLocality":"Hvolsvöllur","postalCode":"861","addressRegion":"Suðurland","addressCountry":"IS"},
+ "geo": {"@type":"GeoCoordinates","latitude":63.6486,"longitude":-20.1913},
+ "image": "https://sindrimar02.github.io/bru-preview/assets/img/rodin.webp",
+ "description": "Twelve self check-in cottages on the south Iceland plain, ten kilometres from Seljalandsfoss. Each with a kitchenette, private bathroom and a mountain-view terrace.",
+ "numberOfRooms": 12,
+ "petsAllowed": false,
+ "checkinTime": "16:00",
+ "checkoutTime": "11:00",
+ "amenityFeature": [
+  {"@type":"LocationFeatureSpecification","name":"Free WiFi","value":true},
+  {"@type":"LocationFeatureSpecification","name":"Free private parking","value":true},
+  {"@type":"LocationFeatureSpecification","name":"Self check-in","value":true},
+  {"@type":"LocationFeatureSpecification","name":"Kitchenette","value":true},
+  {"@type":"LocationFeatureSpecification","name":"Private bathroom","value":true},
+  {"@type":"LocationFeatureSpecification","name":"Electric vehicle charging","value":true}
+ ]
+}
+</script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="bru-root">
+
+<!-- ══ THE OPENING ═══════════════════════════════════════════════════════
+     Twelve shutters, one per cottage. They stand closed while the page really
+     loads, the row of marks fills on REAL progress, and then the shutters lift
+     in sequence from the middle outward to reveal the plain behind. The
+     wordmark does not fade in: it is the SAME element, measured in its loader
+     position and flipped into its hero position, so the opening hands the page
+     over rather than cutting to it. -->
+<!-- ══ THE OPENING ═══════════════════════════════════════════════════════
+     One idea, three beats. The wordmark stands in outline on the night ground
+     and a horizon LINE rises through it as the page really loads, filling the
+     letters from below. At 100% that same line runs out of the letters to both
+     edges, the field splits along it, and the photograph is already in
+     register behind — its own horizon on the same row. No percentage counter:
+     the mark IS the progress. -->
+<div class="bru-open" id="opening" aria-hidden="true">
+  <div class="bru-open__half bru-open__half--top" id="openTop"></div>
+  <div class="bru-open__half bru-open__half--bot" id="openBot"></div>
+  <svg class="bru-open__svg" id="openSvg" aria-hidden="true" focusable="false">
+    <defs>
+      <clipPath id="bruGlyphs" clipPathUnits="userSpaceOnUse">
+        <use href="#bruOpenText"></use>
+      </clipPath>
+    </defs>
+    <text id="bruOpenText" class="bru-open__type" text-anchor="middle"
+      font-family="Technor, sans-serif" font-weight="500" font-size="120">BRÚ</text>
+    <g clip-path="url(#bruGlyphs)">
+      <rect id="openFill" x="0" y="0" width="100%" height="0" fill="#EDEBE6"></rect>
+    </g>
+  </svg>
+  <span class="bru-open__rule" id="openRule"></span>
+</div>
+
+<header class="bru-nav" id="nav">
+  <a class="bru-nav__mark" href="#top">Brú</a>
+  <nav class="bru-nav__links" aria-label="Main menu">
+    <a href="#cottages">Cottages</a>
+    <a href="#inside">Inside</a>
+    <a href="#night">The night</a>
+    <a href="#where">Find us</a>
+    <a class="bru-nav__cta" href="#book">Book direct</a>
+  </nav>
+  <a class="bru-nav__tel" href="tel:+3546594005">659 4005</a>
+  <button class="bru-burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span>
+  </button>
+</header>
+
+<div class="bru-menu" id="menu" hidden>
+  <nav aria-label="Menu">
+    <a href="#cottages">Cottages</a>
+    <a href="#inside">Inside</a>
+    <a href="#night">The night</a>
+    <a href="#where">Find us</a>
+    <a href="#book">Book direct</a>
+  </nav>
+  <div class="bru-menu__foot">
+    <a href="tel:+3546594005">659 4005</a>
+    <a href="mailto:info@bruguesthouse.is">info@bruguesthouse.is</a>
+  </div>
+</div>
+
+<!-- ══ THE INDEX ═════════════════════════════════════════════════════════
+     The row stood up on its end. One hairline down the left edge with a mark
+     per section, the current one lit and named. Same visual language as the
+     cottages in a line, but it now does a job: it tells you where you are and
+     takes you somewhere. Real links, so it works without JS and on a keyboard. -->
+<nav class="bru-index" id="index" aria-label="Sections">
+  <span class="bru-index__line" aria-hidden="true"></span>
+  <a href="#plain" data-sec="plain"><i aria-hidden="true"></i><span>Where this is</span></a>
+  <a href="#cottages" data-sec="cottages"><i aria-hidden="true"></i><span>Cottages</span></a>
+  <a href="#inside" data-sec="inside"><i aria-hidden="true"></i><span>Inside</span></a>
+  <a href="#night" data-sec="night"><i aria-hidden="true"></i><span>The night</span></a>
+  <a href="#book" data-sec="book"><i aria-hidden="true"></i><span>Book direct</span></a>
+  <a href="#where" data-sec="where"><i aria-hidden="true"></i><span>Find us</span></a>
+</nav>
+
+<main id="top">
+
+<!-- ── 1. hero: the row on the horizon ──────────────────────────────────
+     husin2.jpg — the dead-straight track at the mountains with the cottages
+     reduced to marks along the horizon. The photograph is the brief. -->
+<section class="bru-hero" id="hero">
+  <div class="bru-hero__media">
+    <img src="assets/img/rodin.webp" width="1024" height="683"
+      alt="A straight gravel track running toward the mountains, with the row of cottages along the horizon"
+      fetchpriority="high" decoding="async">
+  </div>
+  <div class="bru-wrap bru-hero__copy">
+    <div class="bru-hero__top">
+      <p class="bru-hero__eyebrow" id="heroEyebrow">South Iceland · 861 Hvolsvöllur</p>
+    </div>
+    <h1 class="bru-hero__wm">Brú</h1>
+    <div class="bru-hero__foot">
+      <p class="bru-hero__sub">Twelve cottages on the plain, ten kilometres from Seljalandsfoss. Let yourself in whenever you arrive.</p>
+      <a class="bru-btn bru-btn--onDark" href="#book">Book direct</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. the plain ─────────────────────────────────────────────────────
+     Their own site never says where they are. Ours does, in the first
+     paragraph, because that is the thing a guest is actually deciding. -->
+<section class="bru-sec" id="plain">
+  <div class="bru-wrap bru-split">
+    <div>
+      <p class="bru-eyebrow bru-rv">Where this is</p>
+      <h2 class="bru-h2" data-headline>Ninety minutes from the airport</h2>
+    </div>
+    <div class="bru-rv">
+      <p class="bru-lede">Brú sits on the flat land east of Hvolsvöllur, with the mountains on one side and the sea air on the other. The cottages stand in a row along the track, far enough apart that you hear weather instead of neighbours.</p>
+      <p>Seljalandsfoss is ten kilometres away. Skógafoss, the black beach at Vík, the Golden Circle and the ferry to Vestmannaeyjar are all a morning's drive. Most people stay two or three nights and drive out in a different direction each day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3. THE SET PIECE: the lights come on along the row ════════════════
+     Pinned and scrubbed. A canvas frame sequence, never a <video> driven by
+     currentTime: every currentTime assignment is a decoder seek and the film
+     would step instead of track. The footage is their own row at night, the
+     camera tracking along it, generated from their own photograph. -->
+<section class="bru-film" id="film">
+  <div class="bru-film__inner">
+    <div class="bru-film__still"><img src="assets/img/nott-poster.jpg" width="1400" height="936"
+      alt="The row of cottages lit from within at night under a faint aurora" loading="lazy" decoding="async"></div>
+    <canvas class="bru-film__canvas" aria-hidden="true"></canvas>
+    <div class="bru-film__scrim" aria-hidden="true"></div>
+    <div class="bru-film__caps">
+      <p class="bru-film__cap is-on" data-cap="a">Afternoon on the plain</p>
+      <p class="bru-film__cap" data-cap="b">And then the lights come on</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4. the cottages ──────────────────────────────────────────────────
+     Three real types, their own numbers. Two of the three share a source
+     photograph because no photo of the Superior Double exists — the third
+     card says so rather than passing another room off as it. -->
+<section class="bru-sec" id="cottages">
+  <div class="bru-wrap">
+    <p class="bru-eyebrow bru-rv">The cottages</p>
+    <h2 class="bru-h2" data-headline>Three sizes, twelve of them</h2>
+    <div class="bru-cots">
+      <article class="bru-cot bru-rv">
+        <div class="bru-frame"><img class="bru-frame-in" data-drift="9"
+          src="assets/img/tvibreitt.webp" width="1024" height="683"
+          alt="A cottage room with two single beds made up side by side" loading="lazy" decoding="async"></div>
+        <h3>Standard</h3>
+        <p class="bru-cot__meta">25 m² · sleeps 4</p>
+        <p>One room with a kitchenette, private bathroom, and a terrace facing the mountains.</p>
+      </article>
+      <article class="bru-cot bru-rv">
+        <div class="bru-frame"><img class="bru-frame-in" data-drift="9"
+          src="assets/img/stofa.webp" width="1024" height="683"
+          alt="A living and dining room with full-height glazing looking out over the plain" loading="lazy" decoding="async"></div>
+        <h3>Superior</h3>
+        <p class="bru-cot__meta">37 m² · sleeps 4</p>
+        <p>A separate bedroom and a living room with a sofa bed, kitchenette, and mountain-view terrace.</p>
+      </article>
+      <article class="bru-cot bru-rv">
+        <div class="bru-frame"><img class="bru-frame-in" data-drift="9"
+          src="assets/img/svefn.webp" width="1024" height="683"
+          alt="A room with a double bed, desk and a hanging chair by the window" loading="lazy" decoding="async"></div>
+        <h3>Superior Double</h3>
+        <p class="bru-cot__meta">37 m² · sleeps 2</p>
+        <p>One large room with a kitchenette, ensuite, and a terrace over the plain. Same footprint as the Superior, laid out for two.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. inside ────────────────────────────────────────────────────────
+     Their own list, verbatim from their site and OTA listings. Nothing added. -->
+<section class="bru-sec" id="inside" style="padding-top:0">
+  <div class="bru-wrap">
+    <h2 class="bru-h2" data-headline>In every cottage</h2>
+    <ul class="bru-incl bru-rv">
+      <li>Kitchenette</li>
+      <li>Private bathroom</li>
+      <li>Mountain-view terrace</li>
+      <li>Flat-screen TV</li>
+      <li>Fridge and microwave</li>
+      <li>Coffee machine and kettle</li>
+      <li>Free WiFi</li>
+      <li>EV charging</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── 5b. the details: what the place is actually like to be in ────────
+     Small, real things rather than more wide shots. The soap carries their own
+     mark, which is the only place their brand appears in the wild. -->
+<section class="bru-sec" id="details" style="padding-top:0">
+  <div class="bru-wrap">
+    <div class="bru-details">
+      <figure class="bru-rv">
+        <div class="bru-frame"><img class="bru-frame-in" data-drift="7" src="assets/img/hillan.webp"
+          width="1024" height="696" alt="A shelf of pots, pans and enamel mugs above the kitchenette" loading="lazy" decoding="async"></div>
+        <figcaption>Enough kitchen to cook properly, not just reheat.</figcaption>
+      </figure>
+      <figure class="bru-rv">
+        <div class="bru-frame"><img class="bru-frame-in" data-drift="7" src="assets/img/teppi.webp"
+          width="1024" height="683" alt="A folded Icelandic wool blanket across the end of a bed" loading="lazy" decoding="async"></div>
+        <figcaption>Wool on every bed, because the wind here earns it.</figcaption>
+      </figure>
+      <figure class="bru-rv">
+        <div class="bru-frame"><img class="bru-frame-in" data-drift="7" src="assets/img/sapa.webp"
+          width="576" height="768" alt="A soap dispenser on the bathroom shelf with the Brú mark on it" loading="lazy" decoding="async"></div>
+        <figcaption>Our own soap, in our own bathrooms.</figcaption>
+      </figure>
+      <figure class="bru-rv">
+        <div class="bru-frame"><img class="bru-frame-in" data-drift="7" src="assets/img/bad.webp"
+          width="1024" height="768" alt="A tiled bathroom with a walk-in shower" loading="lazy" decoding="async"></div>
+        <figcaption>A full bathroom, not a shower cubicle in a corner.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ── 6. the night ─────────────────────────────────────────────────────
+     The only place the aurora green runs at full strength. Both photographs
+     are theirs; nothing here is a stock sky. -->
+<section class="bru-night" id="night">
+  <div class="bru-night__media">
+    <div class="bru-frame"><img class="bru-frame-in" data-drift="14"
+      src="assets/img/nott-aurora.webp" width="1024" height="683"
+      alt="A cottage lit from within under a full green aurora" loading="lazy" decoding="async"></div>
+  </div>
+  <div class="bru-wrap bru-night__copy bru-split">
+    <div>
+      <p class="bru-eyebrow bru-rv">After dark</p>
+      <h2 class="bru-h2" data-headline>No street lights for a very long way</h2>
+    </div>
+    <div class="bru-rv">
+      <p class="bru-lede">There is nothing between the terrace and the mountains, which is the point. On a clear night between September and April the sky over the plain does what people fly here to see.</p>
+      <p>You do not have to drive anywhere for it. Turn the lights off inside and stand on your own deck.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 7. BOOK DIRECT — the row becomes the product ═════════════════════
+     The same twelve marks, now at size and selectable. This is the section
+     the rebuild exists for: today their own /book route returns a 404. -->
+<section class="bru-book" id="book">
+  <div class="bru-wrap bru-book__grid">
+    <div>
+      <p class="bru-eyebrow bru-rv">Direct</p>
+      <h2 class="bru-h2" data-headline>Book the cottage, not the listing</h2>
+      <p class="bru-lede bru-rv">Send us your dates and we answer by email, usually the same day. No booking fee, and you are talking to the people who own the place rather than a platform.</p>
+    </div>
+
+    <form class="bru-form bru-rv" id="form" novalidate>
+      <div class="bru-field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+      <div class="bru-field"><label for="f-mail">Email</label><input id="f-mail" name="mail" type="email" autocomplete="email" required></div>
+      <div class="bru-field"><label for="f-in">Arrival</label><input id="f-in" name="in" type="date" required></div>
+      <div class="bru-field"><label for="f-out">Departure</label><input id="f-out" name="out" type="date" required></div>
+      <div class="bru-field"><label for="f-cot">Cottage</label>
+        <select id="f-cot" name="cot">
+          <option value="standard">Standard, 25 m², sleeps 4</option>
+          <option value="superior">Superior, 37 m², sleeps 4</option>
+          <option value="double">Superior Double, 37 m², sleeps 2</option>
+        </select></div>
+      <div class="bru-field"><label for="f-guests">Guests</label><input id="f-guests" name="guests" type="number" min="1" max="4" value="2" required></div>
+      <div class="bru-field bru-field--wide"><label for="f-note">Anything we should know</label>
+        <textarea id="f-note" name="note" rows="3" placeholder="Late arrival, travel cot, allergies"></textarea></div>
+      <button class="bru-btn" type="submit">Send request</button>
+      <p class="bru-form__msg" id="formMsg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ── 7b. what guests say ───────────────────────────────────────────────
+     REAL reviews, quoted from their own public listings, each attributed with
+     its source and date. Nothing written by us. The owner should confirm
+     before this goes public: see _internal/NOTES.md. -->
+<section class="bru-says" id="says">
+  <div class="bru-wrap bru-says__grid">
+    <div class="bru-rv">
+      <p class="bru-eyebrow">What guests say</p>
+      <p class="bru-says__score">9,3</p>
+      <p class="bru-says__of">out of 10, from 1.181 reviews on Booking.com</p>
+    </div>
+    <div class="bru-rv">
+      <div class="bru-says__stage" id="saysStage">
+        <figure class="bru-quote is-on">
+          <blockquote>Probably the best cottage I have ever been. And best location for northern light spotting.</blockquote>
+          <cite>Trip.com, November 2024</cite>
+        </figure>
+        <figure class="bru-quote">
+          <blockquote>The self check-in was flawless. The keys were in a box outside the cottage and the code came by email in advance.</blockquote>
+          <cite>Tripadvisor, May 2023</cite>
+        </figure>
+        <figure class="bru-quote">
+          <blockquote>A special shout-out to the owners, who took the time to track me down after I absentmindedly left our passports behind.</blockquote>
+          <cite>Tripadvisor, July 2024</cite>
+        </figure>
+        <figure class="bru-quote">
+          <blockquote>Each house seems rather small from the outside, but the inside is super cosy and has everything you might need.</blockquote>
+          <cite>Tripadvisor, guest review</cite>
+        </figure>
+      </div>
+      <div class="bru-says__dots" id="saysDots" role="tablist" aria-label="Reviews"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 8. find us ───────────────────────────────────────────────────────
+     NOT loading="lazy": a lazy iframe this deep in a scroll-heavy page has
+     measured 6-10s of blank box, because the native lazy scheduler gets
+     starved by the ticker and the scrubbed triggers. Eager-load it. -->
+<section class="bru-sec" id="where">
+  <div class="bru-wrap bru-where__grid">
+    <div>
+      <p class="bru-eyebrow bru-rv">Find us</p>
+      <h2 class="bru-h2" data-headline>Brú, 861 Hvolsvöllur</h2>
+      <div class="bru-rv">
+        <p class="bru-lede">Off the ring road east of Hvolsvöllur. Ten kilometres to Seljalandsfoss, about ninety minutes from Keflavík airport.</p>
+        <p>Check in from 16:00, out by 11:00. Check-in is self service: we email you the door code the day before, so it does not matter what time you arrive.</p>
+        <address class="bru-addr">
+          <a href="https://www.google.com/maps/search/?api=1&query=Br%C3%BA+Guesthouse+861+Hvolsv%C3%B6llur" target="_blank" rel="noopener">Brú, 861 Hvolsvöllur</a>
+          <a href="tel:+3546594005">659 4005</a>
+          <a href="mailto:info@bruguesthouse.is">info@bruguesthouse.is</a>
+        </address>
+      </div>
+    </div>
+    <div class="bru-map bru-rv">
+      <iframe
+        src="https://www.google.com/maps?q=Br%C3%BA,+861+Hvolsv%C3%B6llur,+Iceland&z=11&output=embed"
+        title="Map: Brú, 861 Hvolsvöllur" width="600" height="450"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="bru-foot">
+  <div class="bru-wrap bru-foot__grid">
+    <p class="bru-foot__mark">Brú</p>
+    <div class="bru-foot__col">
+      <a href="tel:+3546594005">659 4005</a>
+      <a href="mailto:info@bruguesthouse.is">info@bruguesthouse.is</a>
+    </div>
+    <div class="bru-foot__col"><p>Brú<br>861 Hvolsvöllur<br>Iceland</p></div>
+    <div class="bru-foot__col">
+      <a href="#cottages">Cottages</a>
+      <a href="#book">Book direct</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

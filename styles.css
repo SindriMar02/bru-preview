@@ -1,0 +1,409 @@
+/* ════════════════════════════════════════════════════════════════════════
+   Brú Guesthouse — "The Row"
+   Twelve identical cottages on one line. ONE structural device: a hairline
+   with twelve marks, which is the identity, the navigation AND the booking
+   product. Everything else stays quiet.
+   Palette sampled from their own photographs (see DESIGN.md for provenance).
+   Keyframes are bru- prefixed: a shared @keyframes name can be silently
+   redefined by another build's stylesheet and freeze this one.
+   ════════════════════════════════════════════════════════════════════════ */
+
+@font-face{font-family:'Technor';src:url('assets/fonts/Technor-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Synonym';src:url('assets/fonts/Synonym-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Synonym';src:url('assets/fonts/Synonym-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+
+:root{
+  /* scrubbed by the engine along the day -> dusk -> lit -> aurora arc;
+     these are only the pre-JS resting values */
+  --c:#CFD2DB;          /* canvas */
+  --ink:#242017;        /* text on canvas */
+  --soft:#E4E6EA;       /* raised surface */
+
+  /* sampled, constant */
+  --larch:#75614C;
+  --larch-lit:#A0896E;
+  --larch-deep:#342C22;
+  --plain:#635A3D;
+  --plain-lift:#776F47;
+  --sky:#CFD2DB;
+  --sky-deep:#788191;
+  --night:#11101E;
+  --night-deep:#0A0916;
+  --window:#E8B87A;     /* the glow of a lit cottage, lifted to read at 6px */
+  --aurora:#4E9A3B;     /* nordurljos green, lifted for AA on night */
+
+  --pad:clamp(20px,5vw,76px);
+  --maxw:1340px;
+  --nav-h:clamp(56px,7vh,68px);
+  --r:0;                /* hard-edged boxes, hard-edged page */
+  --e:cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--c);color:var(--ink);
+  font-family:'Synonym',system-ui,sans-serif;
+  font-size:clamp(15px,1.02vw,17.5px);line-height:1.62;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background-color .12s linear;
+}
+body.is-loading{overflow:hidden}
+img,video,canvas{max-width:100%;display:block}
+a{color:inherit}
+main>section{scroll-margin-top:calc(var(--nav-h) + 24px)}
+.bru-wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad)}
+.bru-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* ── type ─────────────────────────────────────────────────────────────── */
+.bru-h2{
+  font-family:'Technor',sans-serif;font-weight:500;
+  font-size:clamp(30px,4.4vw,62px);line-height:1.1;
+  letter-spacing:-.02em;margin:0 0 .5em;
+}
+/* headlines inside a NARROW grid column size to the COLUMN, never the
+   viewport — a vw-sized heading in a 400px column towers five lines down the
+   page (learned on Brúin, ledger #96) */
+.bru-split .bru-h2,
+.bru-book__grid .bru-h2,
+.bru-where__grid .bru-h2{font-size:clamp(26px,2.9vw,42px);max-width:17ch}
+.bru-lede{font-size:clamp(17px,1.5vw,22px);line-height:1.5;margin:0 0 1em}
+.bru-eyebrow{
+  font-family:'Synonym',sans-serif;font-weight:500;font-size:11.5px;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:color-mix(in srgb, var(--ink) 62%, transparent);margin:0 0 1.3em;
+}
+p{margin:0 0 1em;max-width:60ch;color:color-mix(in srgb, var(--ink) 84%, transparent)}
+.bru-lede{color:var(--ink)}
+
+/* word masks: the clip lives on the LINE, the word travels */
+.bru-line{display:inline-block;overflow:hidden;padding-bottom:.14em;margin-bottom:-.14em;vertical-align:bottom}
+.bru-word{display:inline-block;will-change:transform}
+
+/* ── buttons ──────────────────────────────────────────────────────────── */
+.bru-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.6em;
+  min-height:48px;padding:0 26px;border-radius:var(--r);
+  font-family:'Synonym',sans-serif;font-weight:500;font-size:15px;
+  text-decoration:none;cursor:pointer;
+  border:1px solid color-mix(in srgb, currentColor 40%, transparent);
+  background:transparent;color:var(--ink);
+  transition:background .25s var(--e),color .25s var(--e),border-color .25s var(--e),transform .16s var(--e);
+}
+.bru-btn:hover{background:var(--ink);color:var(--c);border-color:var(--ink)}
+.bru-btn--onDark{color:#EDEBE6;border-color:rgba(237,235,230,.42)}
+.bru-btn--onDark:hover{background:#EDEBE6;color:var(--night);border-color:#EDEBE6}
+.bru-btn:active{transform:translateY(1px)}
+.bru-btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--aurora);outline-offset:3px
+}
+
+
+/* ── nav ──────────────────────────────────────────────────────────────── */
+.bru-nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:80;
+  display:flex;align-items:center;gap:clamp(10px,2vw,28px);
+  padding-inline:var(--pad);color:#EDEBE6;
+  transition:color .3s var(--e),background .3s var(--e);
+}
+.bru-nav::before{
+  content:'';position:absolute;inset:0 0 auto 0;height:calc(var(--nav-h) + 36px);
+  background:linear-gradient(to bottom, rgba(10,9,22,.62), rgba(10,9,22,0));
+  pointer-events:none;z-index:-1;transition:opacity .3s var(--e);
+}
+.bru-nav.is-solid::before{opacity:0}
+.bru-nav.is-solid{background:var(--c);color:var(--ink)}
+.bru-nav__mark{
+  font-family:'Technor',sans-serif;font-weight:500;
+  font-size:clamp(17px,1.5vw,21px);letter-spacing:.04em;text-transform:uppercase;
+  text-decoration:none;margin-right:auto;min-height:44px;
+  display:inline-flex;align-items:center;
+}
+.bru-nav__links{display:none;gap:clamp(8px,1.4vw,22px);align-items:center}
+.bru-nav__links a{
+  text-decoration:none;font-size:14px;font-weight:500;
+  min-height:44px;min-width:44px;padding:0 8px;
+  display:inline-flex;align-items:center;justify-content:center;opacity:.86;
+  transition:opacity .22s var(--e);
+}
+.bru-nav__links a:hover{opacity:1}
+.bru-nav a.bru-nav__cta{border-bottom:1px solid currentColor;padding:0 2px;margin-left:6px;min-width:0;opacity:1}
+.bru-nav__tel{display:none;text-decoration:none;font-size:14px;font-weight:500;min-height:44px;align-items:center}
+@media (min-width:940px){.bru-nav__links{display:flex}.bru-nav__tel{display:inline-flex}.bru-burger{display:none!important}}
+
+.bru-burger{
+  width:44px;height:44px;display:grid;place-content:center;gap:5px;
+  background:none;border:0;cursor:pointer;color:inherit;
+}
+.bru-burger span{display:block;width:20px;height:1.5px;background:currentColor;transition:transform .3s var(--e)}
+.bru-menu{position:fixed;inset:0;z-index:90;background:var(--night);color:#EDEBE6;display:grid;place-content:center;gap:6px;text-align:center}
+/* [hidden] only sets display:none at UA-stylesheet strength, so ANY author
+   display rule silently defeats it and the overlay covers the page. */
+.bru-menu[hidden]{display:none}
+.bru-menu a{font-family:'Technor',sans-serif;font-size:clamp(26px,5vw,44px);text-decoration:none;padding:.18em 0;display:block}
+.bru-menu__foot{margin-top:2em;display:grid;gap:.6em;font-size:15px}
+
+
+/* ── hero ─────────────────────────────────────────────────────────────── */
+.bru-hero{position:relative;min-height:100svh;overflow:hidden;background:var(--night)}
+.bru-hero__media{position:absolute;inset:0}
+.bru-hero__media img{width:100%;height:100%;object-fit:cover;transform:scale(1.06)}
+.bru-hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to bottom, rgba(10,9,22,.52) 0%, rgba(10,9,22,.14) 30%, rgba(10,9,22,.80) 78%, rgba(10,9,22,.90) 100%);
+}
+.bru-hero__copy{
+  position:relative;z-index:2;min-height:100svh;
+  padding:calc(var(--nav-h) + 20px) var(--pad) clamp(34px,7vh,72px);
+  display:grid;grid-template-rows:auto 1fr auto;justify-items:start;color:#EDEBE6;
+}
+.bru-hero__top{grid-row:1}
+.bru-hero__eyebrow{
+  font-family:'Synonym',sans-serif;font-weight:500;font-size:11.5px;
+  letter-spacing:.26em;text-transform:uppercase;color:rgba(237,235,230,.82);margin:0;
+}
+.bru-hero__wm{
+  grid-row:2;align-self:center;margin:0;
+  font-family:'Technor',sans-serif;font-weight:500;
+  font-size:clamp(64px,15vw,220px);line-height:1;letter-spacing:-.01em;
+  text-transform:uppercase;color:#EDEBE6;
+  /* the wordmark sits ON the horizon: a hairline runs out of it to both edges */
+  position:relative;
+}
+.bru-hero__wm::after{
+  content:'';position:absolute;left:calc(100% + 22px);top:62%;
+  width:100vw;height:1px;background:rgba(237,235,230,.5);
+  transform-origin:left center;
+}
+.bru-hero__foot{grid-row:3;display:grid;gap:14px;max-width:44ch}
+.bru-hero__sub{color:rgba(237,235,230,.92);margin:0;font-size:clamp(15px,1.2vw,18px)}
+
+/* ── generic frame (drift) ────────────────────────────────────────────── */
+.bru-frame{position:relative;overflow:hidden;width:100%;height:100%}
+.bru-frame-in{width:100%;height:100%;object-fit:cover;will-change:transform}
+
+/* ── split sections ───────────────────────────────────────────────────── */
+.bru-sec{padding:clamp(70px,12vh,148px) 0}
+.bru-split{display:grid;gap:clamp(22px,3.4vw,64px);grid-template-columns:1fr}
+@media (min-width:900px){.bru-split{grid-template-columns:1fr 1.1fr;align-items:start}}
+.bru-media{position:relative;height:clamp(300px,58vh,620px)}
+
+/* ── the cottages ─────────────────────────────────────────────────────── */
+.bru-cots{display:grid;gap:clamp(22px,3vw,46px);grid-template-columns:1fr;max-width:1180px;margin-inline:auto}
+@media (min-width:860px){.bru-cots{grid-template-columns:repeat(3,1fr)}}
+.bru-cot .bru-frame{height:clamp(220px,34vh,300px);margin-bottom:1.1em}
+.bru-cot h3{font-family:'Technor',sans-serif;font-weight:500;font-size:clamp(21px,2vw,28px);line-height:1.14;margin:0 0 .35em}
+.bru-cot__meta{
+  font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:color-mix(in srgb, var(--ink) 58%, transparent);margin:0 0 .9em;
+}
+.bru-cot p{max-width:34ch;font-size:15.5px}
+
+/* ── inside: a plain list, no icon zoo ────────────────────────────────── */
+.bru-incl{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);
+  max-width:960px;margin-inline:auto;border-top:1px solid color-mix(in srgb, var(--ink) 16%, transparent)}
+@media (min-width:760px){.bru-incl{grid-template-columns:repeat(4,1fr)}}
+.bru-incl li{padding:clamp(16px,2.4vh,26px) 6px;font-size:15px;
+  border-bottom:1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  color:color-mix(in srgb, var(--ink) 80%, transparent)}
+
+/* ── the night ────────────────────────────────────────────────────────── */
+.bru-night{position:relative;background:var(--night-deep);color:#EDEBE6;padding:0}
+.bru-night__media{position:relative;height:clamp(340px,72vh,760px)}
+.bru-night__copy{padding-block:clamp(44px,7vh,90px) clamp(70px,11vh,140px);position:relative;z-index:2}
+.bru-night .bru-h2,.bru-night p,.bru-night .bru-eyebrow{color:#EDEBE6}
+.bru-night p{color:rgba(237,235,230,.84)}
+.bru-night .bru-eyebrow{color:var(--aurora);opacity:1}
+
+/* ══ BOOK DIRECT — the row becomes the product ════════════════════════ */
+.bru-book{padding:clamp(70px,12vh,148px) 0}
+.bru-book__grid{display:grid;gap:clamp(26px,4vw,66px);grid-template-columns:1fr}
+@media (min-width:960px){.bru-book__grid{grid-template-columns:.92fr 1.08fr;align-items:start}}
+/* the same twelve marks, now at size and selectable */
+.bru-strip__legend b{font-weight:500}
+
+.bru-form{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:620px){.bru-form{grid-template-columns:1fr 1fr}}
+.bru-field{display:grid;gap:7px}
+.bru-field--wide{grid-column:1/-1}
+.bru-field label{font-size:13px;font-weight:500;letter-spacing:.03em}
+.bru-field input,.bru-field textarea,.bru-field select{
+  font-family:'Synonym',sans-serif;font-size:16px;color:var(--ink);
+  background:color-mix(in srgb, var(--ink) 5%, transparent);
+  border:1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  border-radius:var(--r);padding:13px 14px;min-height:48px;width:100%;appearance:none;
+}
+.bru-field textarea{min-height:96px;resize:vertical}
+.bru-form .bru-btn{grid-column:1/-1;justify-self:start}
+.bru-form__msg{grid-column:1/-1;margin:0;font-size:15px;min-height:1.4em;color:var(--plain-lift)}
+.bru-note{font-size:13px;color:color-mix(in srgb, var(--ink) 56%, transparent);margin:.4em 0 0;max-width:46ch}
+
+/* ── where ────────────────────────────────────────────────────────────── */
+.bru-where__grid{display:grid;gap:clamp(22px,3vw,52px);grid-template-columns:1fr}
+@media (min-width:900px){.bru-where__grid{grid-template-columns:1fr 1fr}}
+.bru-map{position:relative;overflow:hidden;aspect-ratio:4/3;width:100%;
+  border:1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  filter:grayscale(.44) contrast(1.03);transition:filter .5s var(--e)}
+.bru-map:hover{filter:grayscale(0) contrast(1)}
+.bru-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.bru-addr{display:grid;gap:.5em;font-style:normal;margin-top:1.4em}
+.bru-addr a{
+  text-decoration:none;border-bottom:1px solid color-mix(in srgb, currentColor 34%, transparent);
+  justify-self:start;min-height:44px;display:inline-flex;align-items:center;
+}
+
+/* ── foot ─────────────────────────────────────────────────────────────── */
+.bru-foot{padding:clamp(44px,7vh,86px) 0 clamp(40px,6vh,72px);border-top:1px solid color-mix(in srgb, var(--ink) 16%, transparent)}
+.bru-foot__grid{display:grid;gap:clamp(18px,2.4vw,44px);grid-template-columns:1fr}
+@media (min-width:760px){.bru-foot__grid{grid-template-columns:1.3fr 1fr 1fr 1fr}}
+.bru-foot__mark{font-family:'Technor',sans-serif;font-size:clamp(24px,2.4vw,34px);margin:0;text-transform:uppercase}
+.bru-foot__col{display:grid;gap:.5em;align-content:start;font-size:15px}
+.bru-foot__col a{
+  text-decoration:none;justify-self:start;
+  border-bottom:1px solid color-mix(in srgb, currentColor 28%, transparent);
+  min-height:44px;display:inline-flex;align-items:center;
+}
+
+/* ── reveal ───────────────────────────────────────────────────────────── */
+.bru-rv{opacity:0;transform:translateY(16px)}
+body.bru-static .bru-rv{opacity:1;transform:none}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .bru-rv{opacity:1!important;transform:none!important}
+  .bru-hero__media img{transform:none}
+}
+
+
+/* ══ THE INDEX ════════════════════════════════════════════════════════════
+   The row stood on its end: one hairline down the left edge, a mark per
+   section, the current one lit and named. Same language as twelve cottages in
+   a line, but it now does a job. Real <a> links, so it works with no JS. */
+.bru-index{
+  position:fixed;left:clamp(14px,2.2vw,30px);top:50%;transform:translateY(-50%);
+  z-index:72;display:none;flex-direction:column;gap:0;
+}
+@media (min-width:1100px){.bru-index{display:flex}}
+.bru-index__line{
+  position:absolute;left:5px;top:6px;bottom:6px;width:1px;
+  background:color-mix(in srgb, currentColor 22%, transparent);
+}
+.bru-index a{
+  position:relative;display:flex;align-items:center;gap:12px;
+  min-height:44px;text-decoration:none;color:inherit;
+  padding-right:4px;
+}
+.bru-index a i{
+  width:11px;height:2px;flex:0 0 11px;
+  background:color-mix(in srgb, currentColor 34%, transparent);
+  transition:width .4s var(--e),background .4s var(--e),box-shadow .4s var(--e);
+}
+.bru-index a span{
+  font-size:12px;letter-spacing:.06em;white-space:nowrap;
+  opacity:0;transform:translateX(-6px);
+  transition:opacity .35s var(--e),transform .35s var(--e);
+}
+.bru-index a:hover span,.bru-index a:focus-visible span{opacity:.7;transform:none}
+.bru-index a.is-here i{
+  width:26px;background:var(--window);
+  box-shadow:0 0 10px color-mix(in srgb, var(--window) 55%, transparent);
+}
+.bru-index a.is-here span{opacity:1;transform:none}
+
+/* ── the pick block: say what the strip is before showing it ───────────── */
+  font-family:'Technor',sans-serif;font-weight:500;
+  font-size:clamp(18px,1.7vw,23px);margin:0 0 .4em;
+}
+  font-size:15px;font-weight:500;margin:1.1em 0 0;
+  color:color-mix(in srgb, var(--ink) 90%, transparent);
+}
+
+
+/* ══ THE SET PIECE ════════════════════════════════════════════════════════ */
+.bru-film{position:relative;height:100svh;overflow:hidden;background:var(--night-deep)}
+.bru-film__inner{position:absolute;inset:0}
+.bru-film__still,.bru-film__still img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bru-film__canvas{position:absolute;inset:0;width:100%;height:100%}
+.bru-film__scrim{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top, rgba(10,9,22,.78) 0%, rgba(10,9,22,0) 46%)}
+.bru-film__caps{position:absolute;left:0;right:0;bottom:clamp(34px,8vh,86px);display:grid;padding-inline:var(--pad)}
+.bru-film__cap{
+  grid-area:1/1;margin:0;max-width:none;
+  font-family:'Technor',sans-serif;font-weight:500;
+  font-size:clamp(24px,4vw,56px);line-height:1.12;letter-spacing:-.018em;
+  color:#EDEBE6;opacity:0;transition:opacity .34s var(--e);
+}
+.bru-film__cap.is-on{opacity:1}
+
+
+
+/* ── the details grid ─────────────────────────────────────────────────── */
+.bru-details{display:grid;gap:clamp(14px,2vw,28px);grid-template-columns:repeat(2,1fr);max-width:1180px;margin-inline:auto}
+@media (min-width:900px){.bru-details{grid-template-columns:repeat(4,1fr)}}
+.bru-details figure{margin:0}
+.bru-details .bru-frame{height:clamp(200px,30vh,300px)}
+.bru-details figcaption{font-size:13.5px;margin-top:.85em;max-width:26ch;
+  color:color-mix(in srgb, var(--ink) 62%, transparent)}
+
+
+/* ══ THE OPENING: the horizon opens ═══════════════════════════════════════
+   The page begins as one black field with a single hairline across it, drawn
+   at the exact height the real horizon sits in the hero photograph. Twelve
+   marks arrive along it, one per cottage, on REAL load progress. Then the
+   field splits along that line: the sky half lifts, the land half drops, and
+   the photograph is already in register behind them — the drawn line and the
+   photographed horizon are the same line. */
+.bru-open{position:fixed;inset:0;z-index:200;pointer-events:none;overflow:hidden}
+.bru-open.is-done{display:none}
+.bru-open__half{position:absolute;left:0;right:0;background:var(--night);will-change:transform}
+.bru-open__half--top{top:0}
+.bru-open__half--bot{bottom:0}
+/* the same line that filled the letters, now running to both edges */
+.bru-open__rule{
+  position:absolute;left:50%;height:1px;width:0;
+  transform:translateX(-50%);
+  background:rgba(237,235,230,.55);
+}
+.bru-open__svg{position:absolute;inset:0;width:100%;height:100%}
+.bru-open__type{
+  fill:none;stroke:rgba(237,235,230,.34);stroke-width:1.1;
+  letter-spacing:.01em;
+}
+  width:min(760px,72vw);margin-inline:auto;pointer-events:none}
+
+
+/* ── testimonials, auto-rotating ──────────────────────────────────────── */
+.bru-says{padding:clamp(64px,11vh,140px) 0}
+.bru-says__grid{display:grid;gap:clamp(20px,3vw,56px);grid-template-columns:1fr}
+@media (min-width:900px){.bru-says__grid{grid-template-columns:.7fr 1.3fr;align-items:start}}
+.bru-says__score{
+  font-family:'Technor',sans-serif;font-weight:500;
+  font-size:clamp(46px,6vw,84px);line-height:1;margin:0;
+}
+.bru-says__of{font-size:14px;margin:.5em 0 0;color:color-mix(in srgb, var(--ink) 60%, transparent)}
+.bru-says__stage{position:relative;min-height:13em}
+@media (min-width:900px){.bru-says__stage{min-height:9.5em}}
+.bru-quote{
+  position:absolute;inset:0;opacity:0;pointer-events:none;
+  transition:opacity .6s var(--e);
+}
+.bru-quote.is-on{opacity:1;pointer-events:auto}
+.bru-quote blockquote{
+  margin:0 0 1.1em;font-family:'Technor',sans-serif;font-weight:500;
+  font-size:clamp(19px,2.1vw,30px);line-height:1.3;letter-spacing:-.01em;max-width:26ch;
+}
+.bru-quote cite{
+  font-style:normal;font-size:13px;letter-spacing:.06em;
+  color:color-mix(in srgb, var(--ink) 58%, transparent);
+}
+.bru-says__dots{display:flex;gap:10px;margin-top:1.6em}
+.bru-says__dots button{
+  width:44px;height:44px;padding:0;border:0;background:none;cursor:pointer;
+  display:grid;place-items:center;
+}
+.bru-says__dots button::before{
+  content:'';display:block;width:20px;height:2px;
+  background:color-mix(in srgb, var(--ink) 26%, transparent);
+  transition:background .3s var(--e),width .3s var(--e);
+}
+.bru-says__dots button[aria-selected="true"]::before{background:var(--ink);width:34px}

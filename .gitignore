@@ -1,0 +1,8 @@
+_internal/
+_*.png
+_*.jpg
+_*.mp4
+assets/img/_bk/
+assets/img/src-*
+node_modules/
+.DS_Store
