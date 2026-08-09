@@ -2,7 +2,7 @@
 
 **Design read:** twelve identical timber cottages standing in a line on a flat
 plain at Brú, 861 Hvolsvöllur, ten kilometres from Seljalandsfoss. Self
-check-in, family-run, 9.3/10 from 1,181 Booking.com reviews. Audience is
+check-in, family-run, 9.3/10 from 1,016 Booking.com reviews. Audience is
 international couples and families basing themselves on the south coast for a
 few nights. The page's single job: **make booking direct the obvious act.**
 
@@ -160,7 +160,7 @@ publish on OTAs and must be labelled as such, or omitted.
 
 They sell through Booking.com, Expedia, Trip.com, Guide to Iceland, Key to
 Iceland and guestreservations.com — six channels, each taking a cut, on a
-business with 1,181 Booking.com reviews and twelve units.
+business with 1,016 Booking.com reviews and twelve units.
 
 A TripAdvisor guest wrote, under room tips: **"Book directly with the
 Guesthouse!"**
