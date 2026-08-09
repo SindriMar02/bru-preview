@@ -407,7 +407,13 @@
     var sec = document.querySelector('.bru-film');
     var cv = sec && sec.querySelector('.bru-film__canvas');
     if (!sec || !cv) return;
-    var ctx = cv.getContext('2d', { alpha: false });
+    /* alpha: TRUE on purpose. An opaque context paints the canvas as a solid
+       black rectangle the moment it exists, which HIDES the poster still
+       behind it until the first frame decodes. On a reload deep in the page
+       that is a black hole where the set piece should be — the exact failure
+       the outreach preflight exists to catch. Transparent means the poster
+       shows through until there is a real frame to draw. */
+    var ctx = cv.getContext('2d', { alpha: true });
     var caps = Array.prototype.slice.call(sec.querySelectorAll('.bru-film__cap'));
     /* DPR is capped by the SOURCE, not just by fill rate: asking for more
        device pixels than the footage can fill is exactly what made the first
@@ -429,6 +435,8 @@
     }
     function draw(i) {
       var im = shots[i];
+      // clear, or a transparent context composites frames on top of each other
+      if (im || shots.some(Boolean)) ctx.clearRect(0, 0, cv.width, cv.height);
       if (!im) {                      // nearest loaded frame, never a blank canvas
         for (var k = 1; k < FRAME_COUNT; k++) {
           if (shots[i - k]) { im = shots[i - k]; break; }
