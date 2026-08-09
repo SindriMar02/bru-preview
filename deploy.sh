@@ -39,8 +39,12 @@ cp "$REPO"/assets/vendor/*.js   assets/vendor/
 
 # SHIPPING ASSETS ONLY, DERIVED from what the page actually references. A
 # hand-maintained list goes stale silently and ships a dead section.
-grep -ohE '(src|href)="assets/img/[^"]+"' index.html \
-  | sed -E 's/.*assets\/img\///; s/"$//' | sort -u > /tmp/bru-assets.txt
+# Match the PATH anywhere, not `src="…"` / `href="…"`: the hero and the aurora
+# ship a srcset, and an attribute-anchored pattern skips every candidate after
+# the first, so the phone-sized files never stage and 404 on exactly the device
+# the owner opens the link on.
+grep -ohE 'assets/img/[A-Za-z0-9._-]+\.(webp|jpg|jpeg|png|svg)' index.html \
+  | sed -E 's|.*assets/img/||' | sort -u > /tmp/bru-assets.txt
 while read -r f; do [ -n "$f" ] && cp "$REPO/assets/img/$f" "assets/img/$f"; done < /tmp/bru-assets.txt
 cp "$REPO/assets/img/favicon.svg" assets/img/
 # the frame sequence is referenced from JS, so grep can never see it

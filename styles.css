@@ -376,6 +376,12 @@ body.bru-static .bru-rv{opacity:1;transform:none}
 
 /* ── testimonials, auto-rotating ──────────────────────────────────────── */
 .bru-says{padding:clamp(64px,11vh,140px) 0}
+/* The proof now runs straight into the form. Both sections carry their own
+   generous padding, and stacked they left a dead band between the quote and
+   the first field — the exact place the reader should not pause. Collapse the
+   seam at the join only, so either section still stands alone if moved. */
+.bru-says:has(+ .bru-book){padding-bottom:clamp(30px,4.5vh,64px)}
+.bru-says + .bru-book{padding-top:clamp(30px,4.5vh,64px)}
 .bru-says__grid{display:grid;gap:clamp(20px,3vw,56px);grid-template-columns:1fr}
 @media (min-width:900px){.bru-says__grid{grid-template-columns:.7fr 1.3fr;align-items:start}}
 .bru-says__score{
