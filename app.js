@@ -292,7 +292,10 @@
      HORIZON_F is measured, not guessed: the horizon sits at 48.9% of the hero
      photograph's height. The cover geometry is solved so the drawn line and
      the photographed one are the same line. */
-  var HORIZON_F = 0.489, HERO_W = 1024, HERO_H = 683;
+  var HORIZON_F = 0.60, HERO_W = 1024, HERO_H = 683;   // measured by eye against
+                                                       // marked candidate lines:
+                                                       // the far land edge, and
+                                                       // the row itself sits on it
   (function opening() {
     var wrap = document.getElementById('opening');
     var top = document.getElementById('openTop');
